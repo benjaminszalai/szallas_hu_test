@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\CompanyApiController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -18,9 +20,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/company/{id}', 'CompanyApiController@getById');
-Route::post('/company/list', 'CompanyApiController@getList');
+Route::get('/company/{id}', [CompanyApiController::class, 'getById'])->where('id', '[0-9]+');
+Route::post('/company/list', [CompanyApiController::class, 'getList']);
 
-Route::post('/company', 'CompanyApiController@create');
-Route::put('/company/{id}', 'CompanyApiController@update');
-Route::delete('/company/{id}', 'CompanyApiController@delete');
+Route::post('/company', [CompanyApiController::class, 'create']);
+Route::put('/company/{id}', [CompanyApiController::class, 'update'])->where('id', '[0-9]+');
+Route::delete('/company/{id}', [CompanyApiController::class, 'delete'])->where('id', '[0-9]+');
